@@ -421,7 +421,7 @@
       <div class="card kpi"><div class="label">Delivery partners active</div><div class="value" id="dPartners">0</div><div class="note" id="dPartnersN"></div></div>
       <div class="card kpi"><div class="label">Largest single session</div><div class="value" id="dMax">0</div><div class="note" id="dMaxN"></div></div>
       <div class="card kpi"><div class="label">Median group size</div><div class="value" id="dMed">0</div><div class="note">children per session</div></div>
-      <div class="card kpi"><div class="label">Schools visited more than once</div><div class="value" id="dRepeat">0</div><div class="note" id="dRepeatN"></div></div>
+      <div class="card kpi"><div class="label">School repeat visits</div><div class="value" id="dRepeat">0</div><div class="note" id="dRepeatN"></div></div>
       <div class="card kpi"><div class="label">SEND schools</div><div class="value" id="dSend">0</div><div class="note" id="dSendN"></div></div>
     </div>
 
@@ -476,11 +476,6 @@
       </table>
     </section>
 
-    <section class="card">
-      <h2>Data quality and method</h2>
-      <p class="h2note">Read this before quoting a figure externally.</p>
-      <ul class="hl" id="quality"></ul>
-    </section>
   </div>
 
 
@@ -534,9 +529,9 @@
 
     <section class="card">
       <h2>Award register</h2>
-      <p class="h2note" id="gRegNote">Every award in the current selection. School contact names and email addresses are held in the workbook and are deliberately not shown here.</p>
+      <p class="h2note" id="gRegNote">Every award in the current selection.</p>
       <table id="gTable">
-        <thead><tr><th>School</th><th>Region</th><th class="num">Approved</th><th>Status</th><th>Paid</th><th>Reel Education delivery</th></tr></thead>
+        <thead><tr><th>School</th><th>Region</th><th class="num">Approved</th><th>Status</th><th>Paid</th><th>Reel Education delivery, Q1 2026/27</th></tr></thead>
         <tbody></tbody>
       </table>
     </section>
@@ -550,28 +545,13 @@
       </table>
     </section>
 
-    <section class="card">
-      <h2>Data quality and method</h2>
-      <p class="h2note">Read this before quoting a figure externally.</p>
-      <ul class="hl" id="gQuality"></ul>
-    </section>
   </div>
 
   <footer>
-    <p class="footnote">
-      Source: <strong>Reel Ed delivery data 2026-27-v1.xlsx</strong>. Delivery views use sheet "Reel Ed Data", 69 session records
-      covering 3 April 2026 to 1 July 2026. The School grants view uses sheet "EA Access to Angling Fund schls", 14 award records.
-      Every figure is recomputed live from those records, so filtered views always reconcile to the raw data.
-    </p>
     <p>
-      Regions and Environment Agency Areas are derived from the school postcode using the workbook's own Ref-Postcodes and Ref-Counties lookups.
-      Reel Education is funded from fishing licence income through the Environment Agency.
-      Find out more at <a href="https://anglingtrust.net/get-fishing/" target="_blank" rel="noopener">anglingtrust.net/get-fishing</a>,
+      Find out more at <a href="https://anglingtrust.net/reel-education/" target="_blank" rel="noopener">anglingtrust.net/reel-education</a>,
       or join the Angling Trust at <a href="https://anglingtrust.net/membership/" target="_blank" rel="noopener">anglingtrust.net/membership</a> (01568 620447).
     </p>
-    <p>No pupil-level or personal data appears anywhere in this dashboard. School contact names and email addresses held in the source
-      workbook are excluded. Delivery partner names are shown in a professional capacity only.
-      The "EA Funded School Clubs - Survey" sheet is deliberately not used here; it is case-study and news material rather than dashboard data.</p>
   </footer>
 </div>
 <div id="tooltip" role="status" aria-live="polite"></div>
@@ -620,11 +600,9 @@ const TYPE_ORDER = ["In School", "Bankside", "Reel Ed at an event"];
 const KS_ORDER = ["KS1", "KS1+2", "KS2", "KS3+4", "KS4"];
 const PARTNERS = ["Pro-Stars FSE", "Everybody Can Fish", "Chris Yates - FunSport4kids", "Neil Wylie", "Neil Thomas - Top Cast Angling", "Andrew Cole", "Chris Holden", "Carole and David Sanderson", "Claire Cummins", "Cast a Thought", "Sarah Thomson - Barford", "Reel Minds CIC", "Jude DeSouza", "Ian Sanderson", "Anthony Mottershead", "Taylor Yates"];
 const MULTI_SCHOOL = ["8 Schools from WA", "AXIA Group day - 6 schools", "Englefield schools event 8 x sessions", "Ocean Generation schools event in Swanage", "Ocean Generation schools event in Swansea"];
-const QUALITY = [["Source and refresh.", " Built from 'Reel Ed delivery data 2026-27-v1.xlsx', sheet 'Reel Ed Data', 69 session records. The workbook's own summary sheets are not used: every figure here is recomputed from the session rows, so a filtered view can never disagree with the total."], ["Variance against the workbook's summary sheets.", " The 'Reel Education Outputs Static' sheet reports 5,786 primary and 164 secondary students (5,950 total) and the 'Reel Education Outputs' sheet totals 5,395. The session rows sum to 5,441 (4,936 primary, 505 secondary). The summary sheets appear to be built from an earlier or wider extract; worth reconciling before either figure goes to the Environment Agency."], ["Multi-school events count as one school record.", " 5 records describe events covering several schools (8 Schools from WA; AXIA Group day - 6 schools; Englefield schools event 8 x sessions; Ocean Generation schools event in Swanage; Ocean Generation schools event in Swansea). The schools KPI therefore understates the number of individual schools reached."], ["One phase value looks miskeyed.", " Headlands High, Bridlington is recorded once as a Primary school (29 June 2026, 16 children, KS3+4) and twice as Secondary. The value is shown as recorded rather than silently corrected; a fix in the workbook would move 16 children from primary to secondary."], ["Corrections applied on load.", " Three records carried the school postcode 'Y016 6UR', a typographic slip for 'YO16 6UR' (Headlands High, Bridlington). Corrected so the school maps to Yorkshire and The Humber and Environment Agency Area 3. One trailing row containing only a row count was dropped. No other values were changed."], ["Delivery outside England.", " Ocean Generation schools event in Swansea (SA1 1SF, 60 children) sits outside the English Region and Environment Agency Area structures, so it appears in every total but on neither map."], ["Geography is derived, not recorded.", " The workbook does not carry an Angling Trust Region or Environment Agency Area on each row. Both are derived from the school postcode area using the workbook's own Ref-Postcodes and Ref-Counties lookups. Postcode area is a coarse match; a full postcode lookup would be more precise where an area straddles a boundary."], ["North and South are as recorded by the delivery team.", " The 'North/South' column reflects which Reel Education Officer covers the school and does not always agree with the Ref-AT Regions sheet (which places East of England and the West Midlands in the North). The row-level value is used here; the reference sheet's Reel Education Area column looks stale."], ["Personal data.", " No pupil names, school contact names, email addresses or full pupil records appear in this dashboard. School names, school postcode areas and delivery partner names are shown; delivery partners appear in a professional capacity."]];
 const BASE_TOTALS = {"children": 5441, "sessions": 69, "schools": 42, "days": 40};
 /* GRANTS: [school, region, amount|null, status, paidDate|null, deliverySchool|null, sessions, children] */
 const GRANTS = [["Grove School and Sixth Form", "East Midlands", 2448.84, "Approved", "2026-01-09", null, 0, 0], ["Cottingham High School", "Yorkshire and The Humber", 2070.8, "Approved", "2026-01-09", "Cottingham High", 1, 40], ["Headlands High School", "North East", 2475.0, "Approved", "2026-04-30", "Headlands High", 3, 76], ["Tarleton Community Primary School", "North West", 1000.0, "Approved", "2026-04-30", "Tarleton Primary", 3, 48], ["Whitehaven Academy", "North West", 2497.32, "Approved", "2026-04-30", "Whitehaven Academy", 3, 62], ["Liberty Academy", "Yorkshire and The Humber", null, "Amount to be confirmed", null, "Liberty Academy", 4, 93], ["Orchard School", "South West", 2151.0, "Approved", "2026-02-10", null, 0, 0], ["Doverpark Primary School", "South West", 2500.0, "Approved", "2026-02-10", null, 0, 0], ["Park Community School", "South East", 2151.0, "Approved", "2026-07-29", null, 0, 0], ["Mallings School", "South East", 2151.0, "Approved", "2026-04-29", "Mallings School", 2, 32], ["Leigham Primary School", "South West", null, "Amount to be confirmed", null, null, 0, 0], ["CCS Essex", "East of England", 2500.0, "Approved", "2026-04-29", null, 0, 0], ["Tarleton Community Primary School", "North West", 1500.0, "Approved, not yet paid", null, "Tarleton Primary", 3, 48], ["Harrogate Grammar School", "Yorkshire and The Humber", null, "Amount to be confirmed", null, null, 0, 0]];
-const GRANT_QUALITY = [["Source and reconciliation.", " Sheet 'EA Access to Angling Fund schls', 14 award records. Approved funding totals \u00a323,444.96, which reconciles exactly to the sheet's own total cell (23,444.96)."], ["3 awards have no amount recorded.", " Liberty Academy; Leigham Primary School; Harrogate Grammar School carry '\u00a3TBC', '\u00a3' or a blank in the funding column, so they count towards the number of awards but contribute nothing to the funding totals. The average award is calculated over the 11 awards that do have an amount."], ["One school has two awards.", " Tarleton Community Primary School appears twice (\u00a31,000 paid 30 April 2026 and \u00a31,500 not yet paid). Both are counted as awards; the schools funded figure counts the school once."], ["The Region column mixes Regions with counties.", " The sheet records a mix of Angling Trust Region labels (East Midlands, North East, North West, Yorkshire) and counties or places (Bristol, Isle of Wight, Hampshire, Kent, Devon, Essex). Counties are mapped to Regions using the workbook's own Ref-Counties sheet. A single consistent Region column in the source would remove this step."], ["One Region disagrees with the school postcode.", " Headlands High School is recorded as North East in the grants sheet, but the school postcode places it in Yorkshire and The Humber. The grants sheet value is used on this view so it matches the fund's own records."], ["Awards span two financial years.", " Payment dates run from 9 January 2026 to 29 July 2026, so these awards straddle the end of 2025/26 and the start of 2026/27. The delivery views cover Quarter 1 of 2026/27 only. Do not read the two datasets as the same period."], ["Only the Region filter applies here.", " An award has no session type, key stage or delivery partner, so the other filters in the bar are ignored on this view. The Region filter works across all three views."], ["Matching to Reel Education delivery.", " 7 awards were matched to a school in the delivery sheet by name, each checked by hand. 'Park Community School' (Hampshire) is deliberately not matched to 'Park Lane' (Cambridgeshire): similar name, different school, different Region. A school identifier such as URN in both sheets would make this automatic and safe."], ["Personal data excluded.", " The sheet holds a contact name and email address for every school. Neither is read into this dashboard. The 'EA Funded School Clubs - Survey' sheet is not used at all: it is case-study and news material, and its free-text answers describe individual pupils."]];
 const G_SCHOOL = 0, G_REGION = 1, G_AMOUNT = 2, G_STATUS = 3, G_PAID = 4,
       G_DSCHOOL = 5, G_DSESSIONS = 6, G_DCHILDREN = 7;
 const gbp = n => "£" + Math.round(n).toLocaleString("en-GB");
@@ -994,7 +972,7 @@ function renderImpact() {
 
   document.getElementById("heroCount").textContent = num(total);
   document.getElementById("heroCap").textContent = active
-    ? "children reached in the current selection" : "children reached this quarter";
+    ? "children reached in the current selection" : "children reached";
   document.getElementById("ctxLine").textContent = active ? "" :
     " In Quarter 1 the programme reached " + num(BASE_TOTALS.children) + " children across "
     + BASE_TOTALS.schools + " schools and school groups, in " + BASE_TOTALS.sessions + " sessions.";
@@ -1235,7 +1213,7 @@ function renderDetail() {
     [num(e.n / e.sessions), "num"]
   ]));
   document.getElementById("partnerNote").textContent =
-    plural(pOrdered.length, "delivery partner") + " active in this selection, from Angling Trust regional officers to contracted coaching providers. Click a bar to filter.";
+    plural(pOrdered.length, "delivery partner") + " active in this selection, from Angling Trust Regional Officers to contracted coaching providers. Click a bar to filter.";
 
   /* month x session type */
   const legend = document.getElementById("mixLegend");
@@ -1281,7 +1259,6 @@ function renderDetail() {
 
   renderSchools(rows);
   renderSessions(rows);
-  renderQuality(rows);
 }
 
 /* school register */
@@ -1341,44 +1318,6 @@ function renderSessions(rows) {
     ukDate(r[S_DATE]), r[S_SCHOOL], r[S_REGION], r[S_TYPE], r[S_KS], [num(r[S_N]), "num"], r[S_BY]
   ]));
 }
-
-function renderQuality(rows) {
-  const ul = document.getElementById("quality");
-  ul.replaceChildren();
-  const bySchoolDate = {};
-  rows.forEach(r => {
-    const k = r[S_SCHOOL] + "|" + r[S_DATE];
-    bySchoolDate[k] = (bySchoolDate[k] || 0) + 1;
-  });
-  const sameDay = Object.entries(bySchoolDate).filter(([, c]) => c > 1);
-  const items = QUALITY.slice();
-  const bySchool = {};
-  rows.forEach(r => { (bySchool[r[S_SCHOOL]] = bySchool[r[S_SCHOOL]] || []).push(r); });
-  const repeats = Object.entries(bySchool).filter(([, v]) => v.length > 1);
-  const repeatChildren = repeats.reduce((s, [, v]) => s + sumN(v) - Math.max(...v.map(r => r[S_N])), 0);
-  items.unshift([
-    "Children are counted per session, not per unique child.",
-    " " + repeats.length + " schools in this selection were visited more than once. If every repeat visit saw the same cohort, "
-    + "up to " + num(repeatChildren) + " of the " + num(sumN(rows)) + " children counted would be repeat attendances. "
-    + "The true figure sits between " + num(sumN(rows) - repeatChildren) + " and " + num(sumN(rows))
-    + " unique children. The headline uses the per-session total, matching the workbook's own pivot tables."
-  ]);
-  if (sameDay.length) {
-    items.push([
-      "Same-school, same-day records.",
-      " " + plural(sameDay.length, "school-and-date combination") + " carries more than one record ("
-      + sameDay.map(([k, c]) => k.split("|")[0] + ", " + c + " records").join("; ")
-      + "). These are recorded as separate sessions in the workbook and are counted as such here."
-    ]);
-  }
-  items.forEach(([b, rest]) => {
-    const li = document.createElement("li");
-    const st = document.createElement("strong"); st.textContent = b;
-    li.append(st, document.createTextNode(rest));
-    ul.appendChild(li);
-  });
-}
-
 
 /* ---------- school grants view ---------- */
 /* The grants dataset is award-level, not session-level, so only the Region filter applies.
@@ -1515,7 +1454,7 @@ function renderGrants() {
       [g[G_AMOUNT] === null ? "to be confirmed" : gbp(g[G_AMOUNT]), "num"],
       g[G_STATUS],
       g[G_PAID] ? ukDate(g[G_PAID]) : "not yet paid",
-      g[G_DSCHOOL] ? plural(g[G_DSESSIONS], "session") + ", " + num(g[G_DCHILDREN]) + " children" : "none this quarter"
+      g[G_DSCHOOL] ? plural(g[G_DSESSIONS], "session") + ", " + num(g[G_DCHILDREN]) + " children" : "none recorded"
     ]
   })));
 
@@ -1539,15 +1478,6 @@ function renderGrants() {
       + ". This is the progression the programme is designed to produce: a taster visit, then a grant, then a club the school runs itself."
     : "No funded school in the current selection had Reel Education delivery this quarter.";
 
-  /* quality */
-  const ul = document.getElementById("gQuality");
-  ul.replaceChildren();
-  GRANT_QUALITY.forEach(([b, rest]) => {
-    const li = document.createElement("li");
-    const st = document.createElement("strong"); st.textContent = b;
-    li.append(st, document.createTextNode(rest));
-    ul.appendChild(li);
-  });
 }
 
 /* ---------- orchestration ---------- */
